@@ -54,6 +54,7 @@ To get started with this project, follow these steps:
 ```sh
 cd frontend
 npm install
+npx update-browserslist-db@latest
 
 cd ../backend
 npm install
@@ -118,9 +119,11 @@ Open a terminal and navigate to the backend directory where the schema.prisma an
 Run the following commands to generate the Prisma structure, apply migrations to your database, and populate it with example data:
 
 ```
+cd backend/prisma
 npx prisma generate
 npx prisma migrate dev
-ts-node seed.ts
+npm install -D tsx
+npx tsx seed.ts
 ```
 
 Once you have completed all the steps, you should be able to save new candidates, both via the web and API, view them in the database, and retrieve them via GET by ID.
