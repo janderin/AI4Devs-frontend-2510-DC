@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card } from 'react-bootstrap';
+import { Star, StarFill, StarHalf } from 'react-bootstrap-icons';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import './CandidateCard.css';
@@ -34,6 +35,17 @@ const CandidateCard: React.FC<CandidateCardProps> = React.memo(({ candidate, ste
     opacity: isDragging ? 0.5 : 1,
   };
 
+  // Convertir puntuación de 1-10 a estrellas (0-5)
+  // Dividir entre 2: 10 = 5 estrellas, 5 = 2.5 estrellas, etc.
+  const stars = useMemo(() => {
+    const scoreOutOf5 = candidate.averageScore / 2;
+    const fullStars = Math.floor(scoreOutOf5);
+    const hasHalfStar = scoreOutOf5 % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    return { fullStars, hasHalfStar, emptyStars };
+  }, [candidate.averageScore]);
+
   return (
     <Card
       ref={setNodeRef}
@@ -44,9 +56,18 @@ const CandidateCard: React.FC<CandidateCardProps> = React.memo(({ candidate, ste
     >
       <Card.Body className="p-2">
         <Card.Title className="h6 mb-1">{candidate.fullName}</Card.Title>
-        <Card.Text className="mb-0 text-muted small">
-          Puntuación: {candidate.averageScore.toFixed(1)}
-        </Card.Text>
+        <div className="d-flex align-items-center gap-1">
+          {Array.from({ length: stars.fullStars }).map((_, i) => (
+            <StarFill key={`full-${i}`} className="text-warning" size={14} />
+          ))}
+          {stars.hasHalfStar && (
+            <StarHalf className="text-warning" size={14} />
+          )}
+          {Array.from({ length: stars.emptyStars }).map((_, i) => (
+            <Star key={`empty-${i}`} className="text-warning" size={14} />
+          ))}
+          <span className="text-muted small ms-1">({candidate.averageScore.toFixed(1)})</span>
+        </div>
       </Card.Body>
     </Card>
   );
