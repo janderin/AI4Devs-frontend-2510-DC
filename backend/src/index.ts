@@ -31,9 +31,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware para permitir CORS desde http://localhost:3000
+// Middleware para permitir CORS desde http://localhost:3000 y http://127.0.1.1:3000
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://127.0.1.1:3000'],
   credentials: true
 }));
 

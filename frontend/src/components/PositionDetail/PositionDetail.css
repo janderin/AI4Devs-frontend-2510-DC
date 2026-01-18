@@ -1,0 +1,11 @@
+.position-detail-container {
+  padding: 1rem;
+  max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .position-detail-container {
+    padding: 0.5rem;
+  }
+}

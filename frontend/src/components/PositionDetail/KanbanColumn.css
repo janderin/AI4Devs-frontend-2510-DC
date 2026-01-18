@@ -1,0 +1,32 @@
+.kanban-column {
+  min-width: 280px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.kanban-column-header {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kanban-column-body {
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
+}
+
+.kanban-column .card.drop-target {
+  border: 2px dashed #0d6efd;
+  background-color: #e7f3ff;
+}
+
+/* Responsive: en móvil las columnas ocupan todo el ancho */
+@media (max-width: 768px) {
+  .kanban-column {
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+}
